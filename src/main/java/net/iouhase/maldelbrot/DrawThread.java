@@ -9,17 +9,19 @@ public class DrawThread implements Runnable {
     double endX, endY;
     double rangeStartX, rangeStartY;
     double rangeEndX, rangeEndY;
+    double maxIterations;
 
-    public DrawThread(PixelWriter writer, double startX, double startY, double endX, double endY, double rangeStartX, double rangeStartY, double rangeEndX, double rangeEndY, double scale) {
+    public DrawThread(PixelWriter writer, double startX, double startY, double endX, double endY, double rangeStartX, double rangeStartY, double rangeEndX, double rangeEndY) {
         this.writer = writer;
         this.startX = startX;
         this.startY = startY;
         this.endX = endX;
         this.endY = endY;
-        this.rangeStartX = rangeStartX / scale;
-        this.rangeStartY = rangeStartY / scale;
-        this.rangeEndX = rangeEndX / scale;
-        this.rangeEndY = rangeEndY / scale;
+        this.rangeStartX = rangeStartX;
+        this.rangeStartY = rangeStartY;
+        this.rangeEndX = rangeEndX;
+        this.rangeEndY = rangeEndY;
+        this.maxIterations = 50;
     }
 
     @Override
@@ -27,13 +29,12 @@ public class DrawThread implements Runnable {
 
         for (double x = startX; x < endX; x++) {
             for (double y = startY; y < endY; y++) {
-                double a = rangeStartX + ((rangeEndX - rangeStartX) / (endX - startX)) * (x - startX);
-                double b = rangeStartY + ((rangeEndY - rangeStartY) / (endY - startY)) * (y - startY);
-
-                double brightness = calcBrightness(a,b);
-
                 synchronized (writer) {
-                    System.out.println(brightness);
+                    double a = rangeStartX + ((rangeEndX - rangeStartX) / (endX - startX)) * (x - startX);
+                    double b = rangeStartY + ((rangeEndY - rangeStartY) / (endY - startY)) * (y - startY);
+
+                    double brightness = calcBrightness(a,b);
+
                     writer.setColor((int) x, (int) y, new Color(brightness, brightness, brightness, 1));
                 }
             }
@@ -46,7 +47,7 @@ public class DrawThread implements Runnable {
         double originalA = a;
         double originalB = b;
 
-        while (n < 100){
+        while (n < maxIterations) {
             double aa = a*a - b*b;
             double bb = 2 * a * b;
 
@@ -56,11 +57,12 @@ public class DrawThread implements Runnable {
             if(Math.abs(a + b) > 16){
                 break;
             }
-
             n++;
         }
-
-        return n / 100;
+        if(n >= maxIterations){
+            return 0;
+        }
+        return n / maxIterations;
     }
 }
 
