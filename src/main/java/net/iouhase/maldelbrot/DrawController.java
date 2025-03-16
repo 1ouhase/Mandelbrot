@@ -6,8 +6,8 @@ import javafx.scene.image.WritableImage;
 
 public class DrawController implements Runnable {
     final int THREADS_SQRT = 1;
-    final double WIDTH = 1920;
-    final double HEIGHT = 1080;
+    final double WIDTH = 1280;
+    final double HEIGHT = 720;
     final double SCALE_START_X = -2.0;
     final double SCALE_END_X = 2;
     final double SCALE_START_Y = -2.0;
