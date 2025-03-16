@@ -35,7 +35,7 @@ public class DrawThread implements Runnable {
 
                     double brightness = calcBrightness(a,b);
 
-                    writer.setColor((int) x, (int) y, new Color(brightness, brightness, brightness, 1));
+                    writer.setColor((int) x, (int) y, new Color(brightness, brightness * 5 % 1, brightness * 10 % 1, 1));
                 }
             }
         }
@@ -54,7 +54,7 @@ public class DrawThread implements Runnable {
             a = aa + originalA;
             b = bb + originalB;
 
-            if(Math.abs(a + b) > 16){
+            if(Math.abs(a + b) > 8){
                 break;
             }
             n++;

@@ -1,22 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="1280.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="net.iouhase.maldelbrot.ImageController">
+<VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.iouhase.maldelbrot.ImageController">
    <children>
       <ImageView fx:id="image" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" />
-      <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
-         <children>
-            <Slider fx:id="sliderX" />
-            <Slider fx:id="sliderY" />
-         </children>
-         <padding>
-            <Insets top="20.0" />
-         </padding>
-      </HBox>
    </children>
 </VBox>

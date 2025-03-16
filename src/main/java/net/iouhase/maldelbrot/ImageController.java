@@ -11,11 +11,6 @@ public class ImageController {
     private ImageView image;
 
     @FXML
-    private Slider sliderX;
-    @FXML
-    private Slider sliderY;
-
-    @FXML
     private void initialize() {
         final int THREADS_SQRT = 1;
         final double WIDTH = 1920;
