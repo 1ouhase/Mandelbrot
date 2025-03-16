@@ -1,5 +1,6 @@
 package net.iouhase.maldelbrot;
 
+import javafx.application.Platform;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.paint.Color;
 
@@ -26,19 +27,20 @@ public class DrawThread implements Runnable {
 
     @Override
     public void run() {
+        Platform.runLater(() -> {
+            for (double x = startX; x < endX; x++) {
+                for (double y = startY; y < endY; y++) {
+                    synchronized (writer) {
+                        double a = rangeStartX + ((rangeEndX - rangeStartX) / (endX - startX)) * (x - startX);
+                        double b = rangeStartY + ((rangeEndY - rangeStartY) / (endY - startY)) * (y - startY);
 
-        for (double x = startX; x < endX; x++) {
-            for (double y = startY; y < endY; y++) {
-                synchronized (writer) {
-                    double a = rangeStartX + ((rangeEndX - rangeStartX) / (endX - startX)) * (x - startX);
-                    double b = rangeStartY + ((rangeEndY - rangeStartY) / (endY - startY)) * (y - startY);
+                        double brightness = calcBrightness(a, b);
 
-                    double brightness = calcBrightness(a,b);
-
-                    writer.setColor((int) x, (int) y, new Color(brightness, brightness * 5 % 1, brightness * 10 % 1, 1));
+                        writer.setColor((int) x, (int) y, new Color(brightness, brightness * 5 % 1, brightness * 10 % 1, 1));
+                    }
                 }
             }
-        }
+        });
     }
 
     private double calcBrightness(double a, double b){
